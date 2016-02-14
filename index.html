@@ -8,6 +8,26 @@
 			border: 1px solid #ccc;
 			margin: 0 auto;
 		}
+		.fast-click__button {
+			width: 150px;
+			height: 30px;
+			margin: 5px auto;
+			font-size: 14px;
+			text-align: center;
+			text-transform: uppercase;
+			line-height: 30px;
+			vertical-align: middle;
+			background: linear-gradient(to bottom, #eee, #bbb);
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.fast-click__button:hover {
+			border: 1px solid #aaa;
+		}
+		.fast-click__button:active {
+			background: linear-gradient(to top, #eee, #bbb);
+		}
 	</style>
 </head>
 <body>
@@ -15,11 +35,22 @@
 	<div class="fast-click">
 		<div class="fast-click__header"></div>
 		<div class="fast-click__score"></div>
+		<div class="fast-click__settings">
+			<div class="fast-click__button button-create">Create</div>
+			<div class="fast-click__button button-start">Start</div>
+		</div>
+		<div class="fast-click__game"></div>
 	</div>
 
 <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
-	var rect = 
+	 var createButton = $(".button-create");
+
+	 function setField(e) {
+	 	
+	 }
+
+	 createButton.addEventListener("mousedown", setField);
 </script>
 </body>
 </html>
