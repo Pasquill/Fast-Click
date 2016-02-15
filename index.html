@@ -8,7 +8,9 @@
 			border: 1px solid #ccc;
 			margin: 0 auto;
 		}
+		.fast-click__select,
 		.fast-click__button {
+			display: block;
 			width: 150px;
 			height: 30px;
 			margin: 5px auto;
@@ -22,11 +24,27 @@
 			border-radius: 5px;
 			cursor: pointer;
 		}
+		.fast-click__select { display: inline-block; }
 		.fast-click__button:hover {
 			border: 1px solid #aaa;
 		}
 		.fast-click__button:active {
 			background: linear-gradient(to top, #eee, #bbb);
+		}
+		.fast-click__option {
+			display: inline;
+		}
+
+		.fast-click__game {
+			text-align: center;
+			margin: 0 auto;
+		}
+		.game-cell {
+			display: inline-block;
+			width: 70px;
+			height: 70px;
+			background: #ccc;
+			border-radius: 100%;
 		}
 	</style>
 </head>
@@ -35,7 +53,13 @@
 	<div class="fast-click">
 		<div class="fast-click__header"></div>
 		<div class="fast-click__score"></div>
-		<div class="fast-click__settings">
+		<div class="fast-click__controls">
+			 <select class="fast-click__select">
+			  	<option value="3" class="fast-click__option" selected>3x3</option>
+			  	<option value="4" class="fast-click__option">4x4</option>
+			  	<option value="5" class="fast-click__option">5x5</option>
+			  	<option value="6" class="fast-click__option">6x6</option>
+			</select> 
 			<div class="fast-click__button button-create">Create</div>
 			<div class="fast-click__button button-start">Start</div>
 		</div>
@@ -44,13 +68,37 @@
 
 <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
-	 var createButton = $(".button-create");
+	var step = 500;
 
-	 function setField(e) {
-	 	
-	 }
+	var createButton = $(".fast-click__button.button-create")[0];
+	var startButton = $(".fast-click__button.button-start")[0];
+	var gameSection = $("fast-click__game")[0];
 
-	 createButton.addEventListener("mousedown", setField);
+
+	var setGameField = function() {
+	 	$(".fast-click__game").empty();
+	 	var rowCells = Number( $(".fast-click__option:selected").val() );
+	 	var totalCells = Math.pow(  rowCells, 2 );
+	 	for(var i = 1; i <= totalCells; i++) {
+	 		var singleCell = document.createElement("div");
+	 		singleCell.setAttribute("class", "game-cell disabled");
+	 		$(".fast-click__game").append(singleCell);
+	 		if(i%rowCells === 0) {
+	 			$(".fast-click__game").append("<div style=\"clear: both;\"></div>");
+	 		}
+	 	}
+	}
+
+	var startGame = setInterval(function() {
+
+	}, step);
+
+	var stopGame = function() {
+		clearInterval(startGame);
+	}
+
+	createButton.addEventListener("mousedown", setGameField);
+	startButton.addEventListener("mousedown", startGame);
 </script>
 </body>
 </html>
