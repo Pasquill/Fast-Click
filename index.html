@@ -46,6 +46,9 @@
 			background: #ccc;
 			border-radius: 100%;
 		}
+		.game-cell.enabled {
+			background: #0fa;
+		}
 	</style>
 </head>
 <body>
@@ -69,16 +72,16 @@
 <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
 	var step = 500;
+	var rowCells = 0, totalCells = 0, interval;
 
 	var createButton = $(".fast-click__button.button-create")[0];
 	var startButton = $(".fast-click__button.button-start")[0];
-	var gameSection = $("fast-click__game")[0];
 
 
 	var setGameField = function() {
 	 	$(".fast-click__game").empty();
-	 	var rowCells = Number( $(".fast-click__option:selected").val() );
-	 	var totalCells = Math.pow(  rowCells, 2 );
+	 	rowCells = Number( $(".fast-click__option:selected").val() );
+	 	totalCells = Math.pow(  rowCells, 2 );
 	 	for(var i = 1; i <= totalCells; i++) {
 	 		var singleCell = document.createElement("div");
 	 		singleCell.setAttribute("class", "game-cell disabled");
@@ -89,13 +92,22 @@
 	 	}
 	}
 
-	var startGame = setInterval(function() {
-
-	}, step);
-
-	var stopGame = function() {
-		clearInterval(startGame);
+	var startGame = function(e) {
+		if(!$(this).hasClass("button-stop")) {
+			$(this).addClass("button-stop");
+			interval = setInterval(function() {
+				var disabledQuant = $(".game-cell.disabled");
+				var rand = Math.floor( Math.random() * disabledQuant.length );
+				//disabledQuant[rand - 1].removeClass("disabled").addClass("enabled");
+				//console.log( $(".game-cell.disabled")[rand].addClass("enabled") );
+				console.log( $(disabledQuant[1]) );
+			}, step);
+		} else {
+			$(this).removeClass("button-stop");
+			clearInterval(interval);
+		}
 	}
+
 
 	createButton.addEventListener("mousedown", setGameField);
 	startButton.addEventListener("mousedown", startGame);
