@@ -97,7 +97,9 @@
 			$(this).addClass("button-stop");
 			interval = setInterval(function() {
 				var disabledQuant = $(".game-cell.disabled");
-				var rand = Math.floor( Math.random() * disabledQuant.length );
+				var rand = Math.floor( Math.random() * disabledQuant.length  - 1 );
+				var toBeChanged = document.getElementsByClassName("disabled")[rand];
+				toBeChanged.addClass("enabled").removeClass("disabled");
 				//disabledQuant[rand - 1].removeClass("disabled").addClass("enabled");
 				//console.log( $(".game-cell.disabled")[rand].addClass("enabled") );
 				console.log( $(disabledQuant[1]) );
