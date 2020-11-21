@@ -81,29 +81,29 @@
 			  	<option value="5" class="fast-click__option">5x5</option>
 			  	<option value="6" class="fast-click__option">6x6</option>
 			</select> 
-			<div class="fast-click__button button-create">Create</div>
-			<div class="fast-click__button button-start">Start</div>
+			<div id="button-create" class="fast-click__button">Create</div>
+			<div id="button-start" class="fast-click__button">Start</div>
 		</div>
 		<div class="fast-click__game"></div>
 	</div>
 
 <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
-	var step = 500;
-	var rowCells = 0, totalCells = 0, interval;
-	var score = 0, lvl = 1;
+	let step = 500;
+	let rowCells = 0, totalCells = 0, interval;
+	let score = 0, lvl = 1;
 
-	var createButton = $(".fast-click__button.button-create")[0];
-	var startButton = $(".fast-click__button.button-start")[0];
-	var fieldListener = $(".fast-click__game")[0];
+	let createButton = $("#button-create")[0];
+	let startButton = $("#button-start")[0];
+	let fieldListener = $(".fast-click__game")[0];
 
 
-	var setGameField = function() {
+	let setGameField = function() {
 	 	$(".fast-click__game").empty();
 	 	rowCells = Number( $(".fast-click__option:selected").val() );
 	 	totalCells = Math.pow(  rowCells, 2 );
-	 	for(var i = 1; i <= totalCells; i++) {
-	 		var singleCell = document.createElement("div");
+	 	for(let i = 1; i <= totalCells; i++) {
+	 		let singleCell = document.createElement("div");
 	 		singleCell.setAttribute("class", "game-cell disabled");
 	 		$(".fast-click__game").append(singleCell);
 	 		if(i%rowCells === 0) {
@@ -115,14 +115,14 @@
 		fieldListener.addEventListener("mousedown", listenGamer);
 	}
 
-	var startGame = function(e) {
+	let startGame = function(e) {
 		createButton.removeEventListener("mousedown", setGameField);
 
 		if( !$(this).hasClass("button-stop") ) {
 			$(this).addClass("button-stop").text("Stop");
 			interval = setInterval(function() {
-				var disabledQuant = $(".game-cell.disabled").length;
-				var rand = Math.floor( Math.random() * disabledQuant  - 1 );
+				let disabledQuant = $(".game-cell.disabled").length;
+				let rand = Math.floor( Math.random() * disabledQuant  - 1 );
 				$(".game-cell.disabled:eq(" + rand + ")").addClass("enabled").removeClass("disabled");
 				if( $(".game-cell.disabled").length < 1 ) {
 					stopGame( e.target );
@@ -134,15 +134,15 @@
 		}
 	}
 
-	var stopGame = function(target) {
+	let stopGame = function(target) {
 		target.removeClass("button-stop").text("Start");
 		clearInterval(interval);
 		setGameField();
 		createButton.addEventListener("mousedown", setGameField);
 	}
 
-	var listenGamer = function(e) {
-		var target = e.target || event.srcElement;
+	let listenGamer = function(e) {
+		let target = e.target || event.srcElement;
 		if( /enabled/.test(target.classList) ) {
 			target.classList.add("disabled");
 			target.classList.remove("enabled");
@@ -151,7 +151,7 @@
 		} 
 	}
 
-	var looseGame = function() {
+	let looseGame = function() {
 		$(".score").text(0).css({color: "red"});
 		$(".lvl").text(1).css({color: "red"});
 	}
